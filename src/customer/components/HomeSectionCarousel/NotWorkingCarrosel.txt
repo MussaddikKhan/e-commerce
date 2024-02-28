@@ -1,0 +1,70 @@
+import React, { useState } from "react";
+import 'react-alice-carousel/lib/alice-carousel.css';
+import AliceCarousel from "react-alice-carousel";
+import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
+import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
+
+
+const HomeSectionCarousel = ({ data }) => {
+ const [activeIndex, setActiveIndex] = useState(0);
+
+ const responsive = {
+ 0: { items: 1 },
+ 720: { items: 3 },
+ 1024: { items: 4.5 },
+ };
+
+ const rendernextbutton = () => {
+ return <KeyboardArrowLeftIcon />
+
+
+ };
+
+ const renderprevbutton = () => {
+ return <KeyboardArrowLeftIcon />
+
+ }
+
+
+ const items = data.slice(0, 10).map((item) => <HomeSectionCard product={item} />);
+ return (
+ <div className="border">
+ <div className="relative p-5 border">
+ <AliceCarousel
+ items={items}
+ mouseTracking
+ controlsstrategy="responsive"
+ responsive={responsive}
+ disableDotsControls
+ keyboardnavigation={true}
+
+ renderPrevButton={() => {
+ return <KeyboardArrowLeftIcon sx={{
+ transform: "rotate(90deg)", color: "black", transform: "rotate(90deg)", color: "black", position: "absolute",
+ top: "8rem",
+ left: "0",
+ width: "3%",
+ height: "10%",
+ transform: "translateX(-50%) rotate(0deg)",
+ bgcolor: "white"
+ }} />
+ }}
+ renderNextButton={() => {
+ return <KeyboardArrowLeftIcon sx={{
+ transform: "rotate(90deg)", color: "black", position: "absolute",
+ top: "8rem",
+ left: "102%",
+ width: "3%",
+ height: "10%",
+ transform: "translateX(-50%) rotate(180deg)",
+ bgcolor: "white"
+ }} />
+ }}
+ />
+
+ </div>
+ </div>
+ );
+};
+
+export default HomeSectionCarousel;

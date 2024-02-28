@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
 import { Button } from "@mui/material";
 
-const HomeSectionCarousel = ({data}) => {
+const HomeSectionCarousel = ({ data, sectionName }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const responsive = {
@@ -13,24 +13,43 @@ const HomeSectionCarousel = ({data}) => {
     1024: { items: 4.5 },
   };
 
-  const slidePrev = () => setActiveIndex(activeIndex - 1);
-  const slideNext = () => setActiveIndex(activeIndex + 1);
+  // const slidePrev = () => setActiveIndex(activeIndex - 1);
+  // const slideNext = () => setActiveIndex(activeIndex + 1);
 
-  const syncAcitveIndex = ({ item }) => setActiveIndex(item);
+  const slidePrev = () => {
+    const newIndex = activeIndex - 1;
+    console.log("Previous index:", newIndex);
+    setActiveIndex(newIndex >= 0 ? newIndex : 0);
+  };
 
-  const items = data.slice(0,10).map((item) => <HomeSectionCard product={item}/>);
+  const slideNext = () => {
+    const newIndex = activeIndex + 1;
+    console.log("Next index:", newIndex);
+    setActiveIndex(newIndex < items.length ? newIndex : activeIndex);
+  };
+
+  // const syncActiveIndex = ({ item }) => setActiveIndex(item);
+  const syncActiveIndex = ({ item }) => {
+    console.log("Received item:", item);
+    setActiveIndex(item);
+  };
+
+  const items = data
+    .slice(0, 10)
+    .map((item) => <HomeSectionCard product={item} />);
   return (
     <div className="border">
+      <h2 className="text-2xl font-extrabold text-gray-900 py-5">{sectionName}</h2>
       <div className="relative p-5 border">
         <AliceCarousel
           items={items}
           disableButtonsControls
           responsive={responsive}
           disableDotsControls
-          onSlideChange={syncAcitveIndex}
           activeIndex={activeIndex}
+          onSlideChanged={syncActiveIndex}
         />
-        {(activeIndex !== items.length - 4)&& 
+        {activeIndex !== items.length - 4 && (
           <Button
             variant="contained"
             className="z-50 bg-white"
@@ -48,9 +67,9 @@ const HomeSectionCarousel = ({data}) => {
               sx={{ transform: "rotate(90deg)", color: "black" }}
             />
           </Button>
-        }
+        )}
 
-        {activeIndex !== 0 && 
+        {activeIndex !== 0 && (
           <Button
             variant="contained"
             className="z-50 bg-white"
@@ -68,7 +87,7 @@ const HomeSectionCarousel = ({data}) => {
               sx={{ transform: "rotate(90deg)", color: "black" }}
             />
           </Button>
-        }
+        )}
       </div>
     </div>
   );
