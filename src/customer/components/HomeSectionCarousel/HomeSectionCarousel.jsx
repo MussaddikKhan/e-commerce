@@ -1,37 +1,44 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
-import KeyboardArrowLeftIcon from "@mui/icons-material/KeyboardArrowLeft";
-import { Button } from "@mui/material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 
-const HomeSectionCarousel = ({ data, sectionName }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
+const HomeSectionCarousel = ({ data , sectionName}) => {
+  // const [activeIndex, setActiveIndex] = useState(0);
 
   const responsive = {
     0: { items: 1 },
     720: { items: 3 },
-    1024: { items: 4.5 },
+    1024: { items: 4.5},
   };
 
-  // const slidePrev = () => setActiveIndex(activeIndex - 1);
-  // const slideNext = () => setActiveIndex(activeIndex + 1);
-
-  const slidePrev = () => {
-    const newIndex = activeIndex - 1;
-    console.log("Previous index:", newIndex);
-    setActiveIndex(newIndex >= 0 ? newIndex : 0);
+  const renderPrevButton = ({ isDisabled }) => {
+    return (
+      <KeyboardArrowLeft
+        style={{
+          position: "absolute",
+          top: "8rem",
+          left: "0rem",
+          transform: "translateX(-50%)",
+          backgroundColor: "#f8f8ff",
+          cursor: "pointer",
+        }}
+      />
+    );
   };
-
-  const slideNext = () => {
-    const newIndex = activeIndex + 1;
-    console.log("Next index:", newIndex);
-    setActiveIndex(newIndex < items.length ? newIndex : activeIndex);
-  };
-
-  // const syncActiveIndex = ({ item }) => setActiveIndex(item);
-  const syncActiveIndex = ({ item }) => {
-    console.log("Received item:", item);
-    setActiveIndex(item);
+  const renderNextButton = ({ isDisabled }) => {
+    return (
+      <KeyboardArrowRight
+        style={{
+          position: "absolute",
+          top: "8rem",
+          right: "0rem",
+          transform: "translateX(-50%)",
+          backgroundColor: "#f8f8ff",
+          cursor: "pointer",
+        }}
+      />
+    );
   };
 
   const items = data
@@ -42,52 +49,14 @@ const HomeSectionCarousel = ({ data, sectionName }) => {
       <h2 className="text-2xl font-extrabold text-gray-900 py-5">{sectionName}</h2>
       <div className="relative p-5 border">
         <AliceCarousel
+          mouseTracking
           items={items}
-          disableButtonsControls
           responsive={responsive}
+          keyboardNavigation="true"
           disableDotsControls
-          activeIndex={activeIndex}
-          onSlideChanged={syncActiveIndex}
+          renderPrevButton={renderPrevButton}
+          renderNextButton={renderNextButton}
         />
-        {activeIndex !== items.length - 4 && (
-          <Button
-            variant="contained"
-            className="z-50 bg-white"
-            onClick={slideNext}
-            sx={{
-              position: "absolute",
-              top: "8rem",
-              right: "0rem",
-              transform: "translateX(50%) rotate(90deg)",
-              bgcolor: "white",
-            }}
-            aria-label="next"
-          >
-            <KeyboardArrowLeftIcon
-              sx={{ transform: "rotate(90deg)", color: "black" }}
-            />
-          </Button>
-        )}
-
-        {activeIndex !== 0 && (
-          <Button
-            variant="contained"
-            className="z-50 bg-white"
-            onClick={slidePrev}
-            sx={{
-              position: "absolute",
-              top: "8rem",
-              left: "0rem",
-              transform: "translateX(-50%) rotate(-90deg)",
-              bgcolor: "white",
-            }}
-            aria-label="next"
-          >
-            <KeyboardArrowLeftIcon
-              sx={{ transform: "rotate(90deg)", color: "black" }}
-            />
-          </Button>
-        )}
       </div>
     </div>
   );
