@@ -3,7 +3,6 @@ import "./productCard.css";
 
 const ProductCard = ({ product }) => {
 
-
   return (
    <div className='productCard w-[15rem] border m-3 transition-all cursor-pointer '>
     <div className='h-[20rem]'>
