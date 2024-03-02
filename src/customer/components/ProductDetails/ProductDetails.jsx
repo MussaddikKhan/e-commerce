@@ -393,7 +393,6 @@ export default function ProductDetails() {
                         sx={{ bgcolor: "#d0d0d0", borderRadius: 4, height: 7 }}
                         variant="determinate"
                         value={25}
-                        color="orange"
                       />
                     </Grid>
                     <Grid xs={2}>

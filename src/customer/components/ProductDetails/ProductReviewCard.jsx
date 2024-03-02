@@ -11,7 +11,7 @@ const ProductReviewCard = () => {
               className="text-white"
               sx={{ width: 56, height: 56, bgcolor: "#9155FD" }}
             >
-              R
+              M
             </Avatar>
           </Box>
         </Grid>
