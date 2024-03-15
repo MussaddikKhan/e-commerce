@@ -5,6 +5,7 @@ import ProductReviewCard from "./ProductReviewCard";
 import { Box, Button, Grid, LinearProgress, Rating } from "@mui/material";
 import HomeSectionCard from "../HomeSectionCard/HomeSectionCard";
 import { mens_kurta } from "../../../data/men_kurta";
+import { useNavigate } from "react-router-dom";
 
 
 const product = {
@@ -60,6 +61,11 @@ function classNames(...classes) {
 
 export default function ProductDetails() {
   const [selectedSize, setSelectedSize] = useState();
+  const navigate = useNavigate(); 
+
+  const handleAddToCart=()=>{
+    navigate("/cart")
+  }
  
   return (
     <div className="bg-white lg:px-20">
@@ -252,6 +258,7 @@ export default function ProductDetails() {
                 </div>
 
                 <Button
+                  onClick={handleAddToCart}
                   variant="contained"
                   type="submit"
                   sx={{ padding: ".8rem 2rem", marginTop: "2rem" }}
